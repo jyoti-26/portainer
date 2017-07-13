@@ -46,7 +46,8 @@ module.exports = function (grunt) {
     grunt.task.run(['config:prod', 'clean:all', 'shell:buildBinary:'+p+':'+a, 'before-copy', 'copy:assets', 'after-copy' ]);
   });
   grunt.registerTask('lint', ['eslint']);
-  grunt.registerTask('run-dev', ['build', 'shell:run', 'watch:build']);
+  grunt.registerTask('run-dev', ['build', 'shell:removeExistContainer', 'shell:run', 'watch:build']);
+  grunt.registerTask('mytask', ['shell:removeExistContainer', 'shell:run']);
   grunt.registerTask('clear', ['clean:app']);
 
   // Project configuration.
@@ -173,16 +174,21 @@ module.exports = function (grunt) {
                    if (grunt.file.isFile( ( p === 'windows' ) ? binfile+'.exe' : binfile )) {
                      return 'echo \'BinaryExists\'';
                    } else {
-                     return 'build/build_in_container.sh ' + p + ' ' + a;
+                     return 'build\\build_in_container.bat ' + p + ' ' + a;
                    }
                  }
       },
       run: {
         command: [
-          'docker rm -f portainer',
-          'docker run -d -p 9000:9000 -v $(pwd)/dist:/app -v /tmp/portainer:/data -v /var/run/docker.sock:/var/run/docker.sock:z --name portainer centurylink/ca-certs /app/portainer-linux-amd64 --no-analytics -a /app'
-        ].join(';')
+          /*'docker rm -f portainer_latest',*/
+          'docker run -d -p 9000:9000 -v %cd%/dist:/app -v /tmp/portainer:/data -v /var/run/docker.sock:/var/run/docker.sock:z --name portainer_latest centurylink/ca-certs /app/portainer-linux-amd64 --no-analytics -a /app'
+        ].join(' && ')
       }
+    },
+    removeExistContainer: {
+        command: [
+          'docker rm -f portainer_latest'
+        ].join(' && ')
     },
     replace: {
       concat: {
