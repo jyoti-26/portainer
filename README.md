@@ -29,6 +29,7 @@ Please note that the public demo cluster is **reset every 15min**.
 
 * [Deploy Portainer](https://portainer.readthedocs.io/en/latest/deployment.html)
 * [Documentation](https://portainer.readthedocs.io)
+* <a href="BuildLocallyInWindows.md">Build Locally In Windows (cmd)</a>
 
 ## Getting help
 

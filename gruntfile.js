@@ -180,14 +180,14 @@ module.exports = function (grunt) {
       },
       run: {
         command: [
-          /*'docker rm -f portainer_latest',*/
-          'docker run -d -p 9000:9000 -v %cd%/dist:/app -v /tmp/portainer:/data -v /var/run/docker.sock:/var/run/docker.sock:z --name portainer_latest centurylink/ca-certs /app/portainer-linux-amd64 --no-analytics -a /app'
+          /*'docker rm -f portainer',*/
+          'docker run -d -p 9000:9000 -v %cd%/dist:/app -v /tmp/portainer:/data -v /var/run/docker.sock:/var/run/docker.sock:z --name portainer centurylink/ca-certs /app/portainer-linux-amd64 --no-analytics -a /app'
         ].join(' && ')
       }
     },
     removeExistContainer: {
         command: [
-          'docker rm -f portainer_latest'
+          'docker rm -f portainer'
         ].join(' && ')
     },
     replace: {
